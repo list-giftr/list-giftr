@@ -1,0 +1,6 @@
+# Python artifacts
+__pycache__
+*.py[co]
+
+# Development environment
+.venv
