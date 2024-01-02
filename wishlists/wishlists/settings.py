@@ -135,12 +135,17 @@ AUTH_PASSWORD_VALIDATORS = [
         "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
     },
     {
-        "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",
-    },
-    {
         "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
     },
 ]
+
+# Allow for using weak passwords in a dev environment.
+if not get_env_bool("DISABLE_PASSWORD_RESTRICTIONS"):
+    AUTH_PASSWORD_VALIDATORS.append(
+        {
+            "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",
+        },
+    )
 
 AUTH_USER_MODEL = "core.User"
 
