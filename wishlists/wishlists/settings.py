@@ -42,6 +42,11 @@ def get_env_list(name: str, separator: str = ",") -> list[str]:
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
+# Development Specific Settings
+
+DEV_LIVE_RELOAD = get_env_bool("DEV_LIVE_RELOAD")
+
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
@@ -77,6 +82,9 @@ INSTALLED_APPS = [
     "theme",
 ]
 
+if DEV_LIVE_RELOAD:
+    INSTALLED_APPS.append("django_browser_reload")
+
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
@@ -87,6 +95,9 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "allauth.account.middleware.AccountMiddleware",
 ]
+
+if DEV_LIVE_RELOAD:
+    MIDDLEWARE.append("django_browser_reload.middleware.BrowserReloadMiddleware")
 
 ROOT_URLCONF = "wishlists.urls"
 
