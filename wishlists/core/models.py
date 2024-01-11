@@ -44,3 +44,26 @@ class User(TrackedModel, AbstractBaseUser, PermissionsMixin):
         ordering = ("id",)
         verbose_name = _("user")
         verbose_name_plural = _("users")
+
+
+class IdeaList(TrackedModel):
+    """
+    A list of gift ideas.
+    """
+
+    owner = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name="idea_lists",
+        related_query_name="idea_list",
+        verbose_name=_("owner"),
+    )
+
+    name = models.CharField(
+        blank=False, null=False, max_length=100, verbose_name=_("name")
+    )
+
+    class Meta:
+        ordering = ("created_at",)
+        verbose_name = _("idea list")
+        verbose_name_plural = _("idea lists")
