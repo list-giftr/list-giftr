@@ -3,10 +3,16 @@
 {% load i18n %}
 
 {% block content %}
-    <h1>{% trans "Ideas" %}</h1>
-    <ul>
-        {% for idea_list in idea_lists %}
-            <li><a href="{% url "idea-list-detail" idea_list.id %}">{{ idea_list.name }}</a></li>
-        {% endfor %}
-    </ul>
+    <section class="container mx-auto p-4">
+        <h1 class="text-3xl font-semibold">{% trans "Ideas" %}</h1>
+        <ul class="list-disc list-inside">
+            {% for idea_list in idea_lists %}
+                <li>
+                    <a class="underline text-blue-400" href="{% url "idea-list-detail" idea_list.id %}">
+                        {{ idea_list.name }}
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+    </section>
 {% endblock content %}

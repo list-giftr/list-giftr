@@ -14,6 +14,7 @@
 		"vscode": {
 			"extensions": [
 				"batisteo.vscode-django",
+				"bradlc.vscode-tailwindcss",
 				"ms-python.black-formatter",
 				"patbenatar.advanced-new-file",
 			]

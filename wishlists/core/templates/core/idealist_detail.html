@@ -3,5 +3,8 @@
 {% load i18n %}
 
 {% block content %}
-    <h1>{{ idea_list.name }}</h1>
+    <section class="container mx-auto p-4">
+        <a class="mb-4 block text-blue-400 underline" href="{% url 'idea-lists' %}">Back to idea lists</a>
+        <h1 class="text-3xl font-semibold">{{ idea_list.name }}</h1>
+    </section>
 {% endblock content %}
