@@ -6,13 +6,17 @@ from django.utils.translation import gettext_lazy as _
 from core import managers
 
 
-class User(AbstractBaseUser, PermissionsMixin):
-    id = models.UUIDField(
-        default=uuid4,
-        primary_key=True,
-        verbose_name=_("ID"),
-    )
+class TrackedModel(models.Model):
+    id = models.UUIDField(default=uuid4, primary_key=True, verbose_name=_("ID"))
 
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name=_("created at"))
+    updated_at = models.DateTimeField(auto_now=True, verbose_name=_("updated at"))
+
+    class Meta:
+        abstract = True
+
+
+class User(TrackedModel, AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(unique=True, verbose_name=_("email"))
 
     is_active = models.BooleanField(
@@ -30,9 +34,6 @@ class User(AbstractBaseUser, PermissionsMixin):
         help_text=_("Super users are implicitly granted all permissions."),
         verbose_name=_("is superuser"),
     )
-
-    created_at = models.DateTimeField(auto_now_add=True, verbose_name=_("created at"))
-    updated_at = models.DateTimeField(auto_now=True, verbose_name=_("updated at"))
 
     USERNAME_FIELD = "email"
     EMAIL_FIELD = "email"
