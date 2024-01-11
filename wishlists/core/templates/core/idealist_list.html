@@ -6,7 +6,7 @@
     <h1>{% trans "Ideas" %}</h1>
     <ul>
         {% for idea_list in idea_lists %}
-            <li>{{ idea_list.name }}</li>
+            <li><a href="{% url "idea-list-detail" idea_list.id %}">{{ idea_list.name }}</a></li>
         {% endfor %}
     </ul>
 {% endblock content %}
