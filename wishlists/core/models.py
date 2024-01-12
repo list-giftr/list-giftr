@@ -47,7 +47,7 @@ class User(TrackedModel, AbstractBaseUser, PermissionsMixin):
         verbose_name_plural = _("users")
 
 
-class IdeaList(TrackedModel):
+class IdeaCollection(TrackedModel):
     """
     A list of gift ideas.
     """
@@ -55,8 +55,8 @@ class IdeaList(TrackedModel):
     owner = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
-        related_name="idea_lists",
-        related_query_name="idea_list",
+        related_name="idea_collections",
+        related_query_name="idea_collection",
         verbose_name=_("owner"),
     )
 
@@ -79,7 +79,7 @@ class GiftIdea(TrackedModel):
     """
 
     collection = models.ForeignKey(
-        IdeaList,
+        IdeaCollection,
         on_delete=models.CASCADE,
         related_name="ideas",
         related_query_name="idea",

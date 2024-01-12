@@ -6,9 +6,9 @@
     <section class="container mx-auto p-4">
         <a
             class="mb-4 block text-blue-400 underline"
-            href="{% url 'idea-list-detail' gift_idea.collection.id %}"
+            href="{% url 'idea-collection-detail' gift_idea.collection.id %}"
         >
-            {% trans "Back to idea list" %}
+            {% trans "Back to idea collection" %}
         </a>
         {% if gift_idea.description %}
             <h1 class="text-3xl font-semibold">{{ gift_idea.description }}</h1>
