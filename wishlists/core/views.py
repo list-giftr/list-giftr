@@ -25,3 +25,12 @@ class IdeaListDetailView(LoginRequiredMixin, DetailView):
 
     def get_queryset(self) -> QuerySet[models.IdeaList]:
         return super().get_queryset().filter(owner=self.request.user)
+
+
+class GiftIdeaDetailView(LoginRequiredMixin, DetailView):
+    context_object_name = "gift_idea"
+    model = models.GiftIdea
+    template_name = "core/giftidea_detail.html"
+
+    def get_queryset(self) -> QuerySet[models.GiftIdea]:
+        return super().get_queryset().filter(collection__owner=self.request.user)

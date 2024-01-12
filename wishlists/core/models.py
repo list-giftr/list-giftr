@@ -1,7 +1,8 @@
 from uuid import uuid4
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
+from django.core.exceptions import ValidationError
 from django.db import models
-from django.utils.translation import gettext_lazy as _
+from django.utils.translation import gettext, gettext_lazy as _
 
 from core import managers
 
@@ -67,3 +68,51 @@ class IdeaList(TrackedModel):
         ordering = ("created_at",)
         verbose_name = _("idea list")
         verbose_name_plural = _("idea lists")
+
+    def __str__(self) -> str:
+        return self.name
+
+
+class GiftIdea(TrackedModel):
+    """
+    A gift idea.
+    """
+
+    collection = models.ForeignKey(
+        IdeaList,
+        on_delete=models.CASCADE,
+        related_name="ideas",
+        related_query_name="idea",
+        verbose_name=_("idea collection"),
+        help_text=_("The collection that this idea belongs to."),
+    )
+
+    description = models.TextField(
+        blank=True, null=False, verbose_name=_("description")
+    )
+    link = models.URLField(
+        blank=False,
+        null=True,
+        verbose_name=_("link"),
+        help_text=_("A link with more information about the idea."),
+    )
+
+    class Meta:
+        ordering = ("created_at",)
+        verbose_name = _("gift idea")
+        verbose_name_plural = _("gift ideas")
+
+    def clean(self) -> None:
+        super().clean()
+
+        if not self.description and not self.link:
+            raise ValidationError(
+                gettext("A gift idea must have at least a description or link.")
+            )
+
+    @property
+    def display_text(self):
+        if self.description:
+            return self.description
+
+        return self.link

@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+
+{% block content %}
+    <section class="container mx-auto p-4">
+        <a
+            class="mb-4 block text-blue-400 underline"
+            href="{% url 'idea-list-detail' gift_idea.collection.id %}"
+        >
+            {% trans "Back to idea list" %}
+        </a>
+        {% if gift_idea.description %}
+            <h1 class="text-3xl font-semibold">{{ gift_idea.description }}</h1>
+        {% endif %}
+
+        {% if gift_idea.link %}
+            <p>
+                <span class="font-bold">{% trans "Link" %}:</span>
+                <a
+                    class="text-blue-400 underline"
+                    href="{{ gift_idea.link }}"
+                    rel="noopener noreferrer"
+                    target="_blank"
+                >
+                    {{ gift_idea.link | truncatechars:50 }}
+                </a>
+            </p>
+        {% endif %}
+    </section>
+{% endblock content %}
