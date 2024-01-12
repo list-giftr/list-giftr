@@ -7,23 +7,23 @@ from django.views.generic.list import ListView
 from core import models
 
 
-class IdeaListsView(LoginRequiredMixin, ListView):
-    context_object_name = "idea_lists"
-    model = models.IdeaList
-    template_name = "core/idealist_list.html"
+class IdeaCollectionListView(LoginRequiredMixin, ListView):
+    context_object_name = "idea_collections"
+    model = models.IdeaCollection
+    template_name = "core/ideacollection_list.html"
 
-    def get_queryset(self) -> QuerySet[models.IdeaList]:
+    def get_queryset(self) -> QuerySet[models.IdeaCollection]:
         idea_lists = super().get_queryset()
 
         return idea_lists.filter(owner=self.request.user)
 
 
-class IdeaListDetailView(LoginRequiredMixin, DetailView):
-    context_object_name = "idea_list"
-    model = models.IdeaList
-    template_name = "core/idealist_detail.html"
+class IdeaCollectionDetailView(LoginRequiredMixin, DetailView):
+    context_object_name = "idea_collection"
+    model = models.IdeaCollection
+    template_name = "core/ideacollection_detail.html"
 
-    def get_queryset(self) -> QuerySet[models.IdeaList]:
+    def get_queryset(self) -> QuerySet[models.IdeaCollection]:
         return super().get_queryset().filter(owner=self.request.user)
 
 

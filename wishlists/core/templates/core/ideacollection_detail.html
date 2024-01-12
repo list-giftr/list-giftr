@@ -4,11 +4,13 @@
 
 {% block content %}
     <section class="container mx-auto p-4">
-        <a class="mb-4 block text-blue-400 underline" href="{% url 'idea-lists' %}">Back to idea lists</a>
+        <a class="mb-4 block text-blue-400 underline" href="{% url 'idea-collection-list' %}">
+            {% trans 'Back to idea collections' %}
+        </a>
         <h1 class="text-3xl font-semibold">{{ idea_list.name }}</h1>
 
         <ul class="list-disc list-inside">
-            {% for idea in idea_list.ideas.all %}
+            {% for idea in idea_collection.ideas.all %}
                 <li>
                     <a class="underline text-blue-400" href="{% url "gift-idea-detail" idea.id %}">
                         {{ idea.display_text | truncatechars:50 }}

@@ -8,8 +8,10 @@ urlpatterns = [
         views.GiftIdeaDetailView.as_view(),
         name="gift-idea-detail",
     ),
-    path("ideas/", views.IdeaListsView.as_view(), name="idea-lists"),
+    path("ideas/", views.IdeaCollectionListView.as_view(), name="idea-collection-list"),
     path(
-        "ideas/<uuid:pk>/", views.IdeaListDetailView.as_view(), name="idea-list-detail"
+        "ideas/<uuid:pk>/",
+        views.IdeaCollectionDetailView.as_view(),
+        name="idea-collection-detail",
     ),
 ]

@@ -9,7 +9,7 @@ class UserAdmin(admin.ModelAdmin):
     pass
 
 
-@admin.register(models.IdeaList)
+@admin.register(models.IdeaCollection)
 class IdeaListAdmin(admin.ModelAdmin):
     fields = ("id", "owner", "name", "created_at", "updated_at")
     list_display = ("name", "owner", "created_at", "updated_at")
