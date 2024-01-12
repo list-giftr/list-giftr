@@ -2,5 +2,9 @@
 __pycache__
 *.py[co]
 
+# Generated CSS based on used tailwind classes. This is produced as part of the
+# build step.
+**/static/css/dist
+
 # Development environment
 .venv

@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+
+{% block title %}{% trans "Sign Up" %}{% endblock %}
+
+{% block content %}
+<section class="mx-auto max-w-md p-4">
+    <h1 class="text-4xl mb-4">{% trans "Sign Up" %}</h1>
+    {% url "account_login" as login_url %}
+    <p class="mb-4">
+        {% blocktrans trimmed %}
+            Already have an account? Then please
+            <a class="underline text-blue-500" href="{{ login_url }}">log in</a>.
+        {% endblocktrans %}
+    </p>
+
+    <form method="POST" action="{% url 'account_signup' %}">
+        {% csrf_token %}
+        {{ form }}
+        {% if redirect_field_value %}<input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />{% endif %}
+
+        <button class="rounded-md bg-orange-500 px-3.5 py-1.5 text-base font-semibold leading-7 text-white shadow-sm hover:bg-orange-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white" type="submit">{% trans "Sign Up" %}</button>
+    </form>
+</section>
+{% endblock %}

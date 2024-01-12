@@ -72,6 +72,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "django.forms",
     # Third party apps
     "allauth",
     "allauth.account",
@@ -166,6 +167,8 @@ AUTHENTICATION_BACKENDS = [
     "allauth.account.auth_backends.AuthenticationBackend",
 ]
 
+LOGIN_URL = "account_login"
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
@@ -195,6 +198,10 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 # https://docs.djangoproject.com/en/4.1/topics/email/#email-backends
 
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+
+# Forms
+
+FORM_RENDERER = "django.forms.renderers.TemplatesSetting"
 
 # Logging
 # https://docs.djangoproject.com/en/4.1/topics/logging/
