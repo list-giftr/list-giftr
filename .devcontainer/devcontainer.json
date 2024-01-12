@@ -9,16 +9,18 @@
 	"features": {
 		"ghcr.io/devcontainers-contrib/features/poetry": {},
 		"ghcr.io/devcontainers/features/node": {},
+		"ghcr.io/devcontainers/features/github-cli": {},
 	},
 	"customizations": {
 		"vscode": {
 			"extensions": [
 				"batisteo.vscode-django",
 				"bradlc.vscode-tailwindcss",
+				"ms-azuretools.vscode-docker",
 				"ms-python.black-formatter",
 				"patbenatar.advanced-new-file",
 			]
 		}
 	},
-	"postCreateCommand": ".devcontainer/post-create-hooks.sh"
+	"postCreateCommand": "./.devcontainer/post-create-hook.sh"
 }
