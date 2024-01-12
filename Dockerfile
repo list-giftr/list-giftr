@@ -24,7 +24,7 @@ RUN poetry install --no-interaction --without dev
 COPY . .
 
 # Build CSS files
-RUN cd unnamed_web_project \
+RUN cd wishlists \
     && python ./manage.py tailwind install \
     && python ./manage.py tailwind build
 
