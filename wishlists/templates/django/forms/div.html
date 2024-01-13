@@ -8,9 +8,14 @@
 {% for field in form %}
 {% with field.field.widget.input_type as input_type %}
     {% comment %} <p>{{ input_type }}</p> {% endcomment %}
-{% if input_type == "email" or input_type == "password" or input_type == "text" %}
+{% if input_type == "checkbox" %}
+    <div class="mb-2 align-sub">
+        <label class="mr-1" for="{{ field.id_for_label }}">{{ field.label }}:</label>
+        {{ field }}
+    </div>
+{% else %}
     <div class="mb-2 flex flex-col">
-        <label class="text-md mb-1" for="{{ field.id_for_label }}">{{ field.label }}</label>
+        <label class="text-md mb-1" for="{{ field.id_for_label }}">{{ field.label }}:</label>
         {% if field.errors %}
         <div class="mb-2 p-1 bg-red-200 border border-red-700">
         {% for err in field.errors %}
@@ -23,13 +28,6 @@
         <p class="mt-2 text-sm">{{ field.help_text }}</p>
         {% endif %}
     </div>
-{% elif input_type == "checkbox" %}
-    <div class="mb-2 align-sub">
-        <label class="mr-1" for="{{ field.id_for_label }}">{{ field.label }}</label>
-        {{ field }}
-    </div>
-{% else %}
-    {{ field }}
 {% endif %}
 {% endwith %}
 {% endfor %}

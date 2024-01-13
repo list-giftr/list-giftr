@@ -1,32 +1,41 @@
 from django.urls import path
 
-from core import views
+from core.views import gift_idea, idea_collection
 
 urlpatterns = [
     path(
         "gift-idea/<uuid:pk>",
-        views.GiftIdeaDetailView.as_view(),
+        gift_idea.GiftIdeaDetailView.as_view(),
         name="gift-idea-detail",
     ),
-    path("ideas/", views.IdeaCollectionListView.as_view(), name="idea-collection-list"),
+    path(
+        "ideas/",
+        idea_collection.IdeaCollectionListView.as_view(),
+        name="idea-collection-list",
+    ),
     path(
         "ideas/new",
-        views.IdeaCollectionCreateView.as_view(),
+        idea_collection.IdeaCollectionCreateView.as_view(),
         name="idea-collection-create",
     ),
     path(
         "ideas/<uuid:pk>/",
-        views.IdeaCollectionDetailView.as_view(),
+        idea_collection.IdeaCollectionDetailView.as_view(),
         name="idea-collection-detail",
     ),
     path(
         "ideas/<uuid:pk>/delete",
-        views.IdeaCollectionDeleteView.as_view(),
+        idea_collection.IdeaCollectionDeleteView.as_view(),
         name="idea-collection-delete",
     ),
     path(
         "ideas/<uuid:pk>/edit",
-        views.IdeaCollectionUpdateView.as_view(),
+        idea_collection.IdeaCollectionUpdateView.as_view(),
         name="idea-collection-update",
+    ),
+    path(
+        "ideas/<uuid:pk>/new-idea",
+        gift_idea.GiftIdeaCreateView.as_view(),
+        name="gift-idea-create",
     ),
 ]

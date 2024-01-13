@@ -108,6 +108,9 @@ class GiftIdea(TrackedModel):  # noqa: DJ008
         verbose_name = _("gift idea")
         verbose_name_plural = _("gift ideas")
 
+    def get_absolute_url(self):
+        return reverse("gift-idea-detail", kwargs={"pk": self.pk})
+
     def clean(self) -> None:
         super().clean()
 
