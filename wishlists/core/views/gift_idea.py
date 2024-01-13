@@ -1,9 +1,11 @@
 from typing import Any
 
+from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import get_object_or_404
+from django.utils.translation import gettext as _
 from django.views.generic.detail import DetailView
-from django.views.generic.edit import CreateView
+from django.views.generic.edit import CreateView, DeleteView
 
 from core import forms, models
 from core.mixins import OwnedObjectMixin
@@ -32,6 +34,24 @@ class GiftIdeaCreateView(LoginRequiredMixin, CreateView):
             pk=self.kwargs["pk"],
             owner=self.request.user,
         )
+
+
+class GiftIdeaDeleteView(OwnedObjectMixin, DeleteView):
+    context_object_name = "idea"
+    model = models.GiftIdea
+    object_owner_field = "collection__owner"
+
+    def form_valid(self, *args, **kwargs):
+        # Call the parent method first to ensure the deletion succeeds before we add the
+        # success message.
+        response = super().form_valid(*args, **kwargs)
+
+        messages.add_message(self.request, messages.SUCCESS, _("Deleted gift idea."))
+
+        return response
+
+    def get_success_url(self) -> str:
+        return self.object.collection.get_absolute_url()
 
 
 class GiftIdeaDetailView(OwnedObjectMixin, DetailView):
