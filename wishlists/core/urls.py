@@ -9,6 +9,11 @@ urlpatterns = [
         name="gift-idea-detail",
     ),
     path(
+        "gift-idea/<uuid:pk>/delete",
+        gift_idea.GiftIdeaDeleteView.as_view(),
+        name="gift-idea-delete",
+    ),
+    path(
         "ideas/",
         idea_collection.IdeaCollectionListView.as_view(),
         name="idea-collection-list",
