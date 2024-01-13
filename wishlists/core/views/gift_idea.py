@@ -5,7 +5,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import get_object_or_404
 from django.utils.translation import gettext as _
 from django.views.generic.detail import DetailView
-from django.views.generic.edit import CreateView, DeleteView
+from django.views.generic.edit import CreateView, DeleteView, UpdateView
 
 from core import forms, models
 from core.mixins import OwnedObjectMixin
@@ -63,3 +63,11 @@ class GiftIdeaDetailView(OwnedObjectMixin, DetailView):
     model = models.GiftIdea
     object_owner_field = "collection__owner"
     template_name = "core/giftidea_detail.html"
+
+
+class GiftIdeaUpdateView(OwnedObjectMixin, UpdateView):
+    context_object_name = "gift_idea"
+    model = models.GiftIdea
+    fields = ["name", "description", "link"]
+    object_owner_field = "collection__owner"
+    template_name_suffix = "_update_form"
