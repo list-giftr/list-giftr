@@ -19,6 +19,13 @@ black = "^23.12.1"
 pre-commit = "^3.6.0"
 django-browser-reload = "^1.12.1"
 ruff = "^0.1.13"
+pytest = "^7.4.4"
+pytest-django = "^4.7.0"
+
+[tool.pytest.ini_options]
+DJANGO_SETTINGS_MODULE = "wishlists.settings"
+pythonpath = ["wishlists"]
+testpaths = ["tests"]
 
 [tool.ruff.lint]
 extend-select = [
@@ -31,6 +38,8 @@ extend-select = [
     "I",
     # flake8-django
     "DJ",
+    # flake8-pytest-style
+    "PT",
     # Unnecessary error suppression
     "RUF100",
 ]
