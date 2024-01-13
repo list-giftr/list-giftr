@@ -69,10 +69,3 @@ class IdeaCollectionDetailView(OwnedObjectMixin, DetailView):
     context_object_name = "idea_collection"
     model = models.IdeaCollection
     template_name = "core/ideacollection_detail.html"
-
-
-class GiftIdeaDetailView(OwnedObjectMixin, DetailView):
-    context_object_name = "gift_idea"
-    model = models.GiftIdea
-    object_owner_field = "collection__owner"
-    template_name = "core/giftidea_detail.html"

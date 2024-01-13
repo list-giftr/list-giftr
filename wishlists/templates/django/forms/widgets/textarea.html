@@ -1,0 +1,9 @@
+{% comment %} <pre><code>{% debug %}</code></pre> {% endcomment %}
+
+<textarea
+    class="block w-full resize-y"
+    id="{{ widget.attrs.id }}"
+    name="{{ widget.name }}"
+    {% if widget.attrs.required %}required{% endif %}
+    rows="{{ widget.attrs.rows | default:5 }}"
+>{{ widget.value | default:"" }}</textarea>
