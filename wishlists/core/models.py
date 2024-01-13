@@ -2,6 +2,7 @@ from uuid import uuid4
 
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from django.db import models
+from django.db.models import F
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 
@@ -103,6 +104,12 @@ class GiftIdea(TrackedModel):
         verbose_name=_("link"),
         help_text=_("A link with more information about the idea."),
     )
+    mention_count = models.PositiveSmallIntegerField(
+        null=False,
+        default=1,
+        verbose_name=_("mention count"),
+        help_text=_("The number of times this gift ideas has been brought up."),
+    )
 
     class Meta:
         ordering = ("created_at",)
@@ -114,3 +121,14 @@ class GiftIdea(TrackedModel):
 
     def get_absolute_url(self):
         return reverse("gift-idea-detail", kwargs={"pk": self.pk})
+
+    def increment_mention_count(self):
+        """
+        Increment the instance's ``mention_count`` by one.
+
+        This is performed as a database operation. If callers need the
+        updated value, they must call ``model.refresh_from_db()`` to
+        see it.
+        """
+        self.mention_count = F("mention_count") + 1
+        self.save()

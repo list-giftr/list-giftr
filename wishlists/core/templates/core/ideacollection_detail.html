@@ -3,7 +3,7 @@
 {% load i18n %}
 
 {% block content %}
-    <section class="container mx-auto p-4">
+    <section class="mx-auto max-w-4xl p-4">
         <a class="mb-4 block text-blue-400 underline" href="{% url 'idea-collection-list' %}">
             {% trans 'Back to idea collections' %}
         </a>
@@ -34,14 +34,30 @@
             </a>
         </div>
 
-        <ul class="list-disc list-inside">
-            {% for idea in idea_collection.ideas.all %}
-                <li>
-                    <a class="underline text-blue-400" href="{% url "gift-idea-detail" idea.id %}">
+        {% for idea in idea_collection.ideas.all %}
+            <div class="mb-1 px-4 py-2 bg-slate-100 shadow flex items-center gap-x-2">
+                <p class="flex-grow">
+                    <a class="line-clamp-1 underline text-blue-500" href="{% url "gift-idea-detail" idea.id %}">
                         {{ idea.name }}
                     </a>
-                </li>
-            {% endfor %}
-        </ul>
+                </p>
+                <p>
+                    {% blocktrans trimmed count times=idea.mention_count %}
+                    Mentioned {{ times}} time
+                    {% plural %}
+                    Mentioned {{ times }} times
+                    {% endblocktrans %}
+                </p>
+                <form method="POST" action="{% url 'gift-idea-mention' idea.id %}?from_list_page=1">
+                    {% csrf_token %}
+                    <button
+                        class="bg-green-600 w-8 aspect-1 text-2xl font-bold align-baseline text-white shadow-sm hover:bg-green-500 focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-blue-400"
+                        type="submit"
+                    >
+                        {% trans "+" %}
+                    </button>
+                </form>
+            </div>
+        {% endfor %}
     </section>
 {% endblock content %}
