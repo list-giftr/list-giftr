@@ -24,4 +24,9 @@ urlpatterns = [
         views.IdeaCollectionDeleteView.as_view(),
         name="idea-collection-delete",
     ),
+    path(
+        "ideas/<uuid:pk>/edit",
+        views.IdeaCollectionUpdateView.as_view(),
+        name="idea-collection-update",
+    ),
 ]

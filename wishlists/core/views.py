@@ -6,7 +6,7 @@ from django.forms.models import BaseModelForm
 from django.http import HttpResponse
 from django.urls import reverse_lazy
 from django.utils.translation import gettext as _
-from django.views.generic.edit import CreateView, DeleteView
+from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from django.views.generic.detail import DetailView
 from django.views.generic.list import ListView
 
@@ -60,9 +60,17 @@ class IdeaCollectionListView(LoginRequiredMixin, ListView):
     template_name = "core/ideacollection_list.html"
 
     def get_queryset(self) -> QuerySet[models.IdeaCollection]:
-        idea_lists = super().get_queryset()
+        return super().get_queryset().filter(owner=self.request.user)
 
-        return idea_lists.filter(owner=self.request.user)
+
+class IdeaCollectionUpdateView(LoginRequiredMixin, UpdateView):
+    context_object_name = "idea_collection"
+    model = models.IdeaCollection
+    fields = ["name"]
+    template_name_suffix = "_update_form"
+
+    def get_queryset(self) -> QuerySet[models.IdeaCollection]:
+        return super().get_queryset().filter(owner=self.request.user)
 
 
 class IdeaCollectionDetailView(LoginRequiredMixin, DetailView):
