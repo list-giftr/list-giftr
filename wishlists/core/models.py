@@ -1,10 +1,8 @@
 from uuid import uuid4
 
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
-from django.core.exceptions import ValidationError
 from django.db import models
 from django.urls import reverse
-from django.utils.translation import gettext
 from django.utils.translation import gettext_lazy as _
 
 from core import managers
@@ -79,7 +77,7 @@ class IdeaCollection(TrackedModel):
         return reverse("idea-collection-detail", kwargs={"pk": self.pk})
 
 
-class GiftIdea(TrackedModel):  # noqa: DJ008
+class GiftIdea(TrackedModel):
     """
     A gift idea.
     """
@@ -93,6 +91,9 @@ class GiftIdea(TrackedModel):  # noqa: DJ008
         help_text=_("The collection that this idea belongs to."),
     )
 
+    name = models.CharField(
+        blank=False, null=False, max_length=100, verbose_name=_("name")
+    )
     description = models.TextField(
         blank=True, null=False, verbose_name=_("description")
     )
@@ -108,20 +109,8 @@ class GiftIdea(TrackedModel):  # noqa: DJ008
         verbose_name = _("gift idea")
         verbose_name_plural = _("gift ideas")
 
+    def __str__(self):
+        return self.name
+
     def get_absolute_url(self):
         return reverse("gift-idea-detail", kwargs={"pk": self.pk})
-
-    def clean(self) -> None:
-        super().clean()
-
-        if not self.description and not self.link:
-            raise ValidationError(
-                gettext("A gift idea must have at least a description or link.")
-            )
-
-    @property
-    def display_text(self):
-        if self.description:
-            return self.description
-
-        return self.link

@@ -38,7 +38,7 @@
             {% for idea in idea_collection.ideas.all %}
                 <li>
                     <a class="underline text-blue-400" href="{% url "gift-idea-detail" idea.id %}">
-                        {{ idea.display_text | truncatechars:50 }}
+                        {{ idea.name }}
                     </a>
                 </li>
             {% endfor %}

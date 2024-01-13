@@ -46,7 +46,11 @@ class GiftIdeaDeleteView(OwnedObjectMixin, DeleteView):
         # success message.
         response = super().form_valid(*args, **kwargs)
 
-        messages.add_message(self.request, messages.SUCCESS, _("Deleted gift idea."))
+        messages.add_message(
+            self.request,
+            messages.SUCCESS,
+            _("Deleted gift idea '%(idea)s'.") % {"idea": self.object.name},
+        )
 
         return response
 

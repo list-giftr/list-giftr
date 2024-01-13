@@ -19,8 +19,16 @@ class IdeaListAdmin(admin.ModelAdmin):
 
 @admin.register(models.GiftIdea)
 class GiftIdeaAdmin(admin.ModelAdmin):
-    fields = ("id", "collection", "description", "link", "created_at", "updated_at")
-    list_display = ("description", "collection", "created_at", "updated_at")
+    fields = (
+        "id",
+        "collection",
+        "name",
+        "description",
+        "link",
+        "created_at",
+        "updated_at",
+    )
+    list_display = ("name", "collection", "created_at", "updated_at")
     readonly_fields = ("id", "created_at", "updated_at")
 
     def get_form(
