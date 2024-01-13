@@ -1,9 +1,11 @@
 from uuid import uuid4
+
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.urls import reverse
-from django.utils.translation import gettext, gettext_lazy as _
+from django.utils.translation import gettext
+from django.utils.translation import gettext_lazy as _
 
 from core import managers
 
@@ -18,7 +20,7 @@ class TrackedModel(models.Model):
         abstract = True
 
 
-class User(TrackedModel, AbstractBaseUser, PermissionsMixin):
+class User(TrackedModel, AbstractBaseUser, PermissionsMixin):  # noqa: DJ008
     email = models.EmailField(unique=True, verbose_name=_("email"))
 
     is_active = models.BooleanField(
@@ -77,7 +79,7 @@ class IdeaCollection(TrackedModel):
         return reverse("idea-collection-detail", kwargs={"pk": self.pk})
 
 
-class GiftIdea(TrackedModel):
+class GiftIdea(TrackedModel):  # noqa: DJ008
     """
     A gift idea.
     """
@@ -94,7 +96,7 @@ class GiftIdea(TrackedModel):
     description = models.TextField(
         blank=True, null=False, verbose_name=_("description")
     )
-    link = models.URLField(
+    link = models.URLField(  # noqa: DJ001 - Blank link doesn't make sense.
         blank=False,
         null=True,
         verbose_name=_("link"),
