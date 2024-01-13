@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+
+{% block title %}{% trans "Delete Idea Collection" %}{% endblock title %}
+
+{% block content %}
+    <section class="mx-auto max-w-xl p-4">
+        <h1 class="text-4xl mb-4">
+            {% blocktrans with name=idea_collection.name %}
+            Delete Idea Collection &lsquo;{{ name }}&rsquo;?
+            {% endblocktrans %}
+        </h1>
+
+        <p class="mb-4 text-lg leading-relaxed">
+            {% if idea_count == 0 %}
+                {% blocktrans %}
+                Are you sure you want to delete this empty idea collection?
+                {% endblocktrans %}
+            {% else %}
+                {% blocktrans count idea_count=idea_count %}
+                Are you sure you want to delete this collection along with the
+                gift idea you added?
+                {% plural %}
+                Are you sure you want to delete this collection and all
+                {{ idea_count }} gift ideas?
+                {% endblocktrans %}
+            {% endif %}
+        </p>
+
+        <form method="POST" action="{% url 'idea-collection-delete' idea_collection.id %}">
+            {% csrf_token %}
+            {{ form }}
+
+            <div class="flex justify-between items-center">
+                <a class="underline text-blue-500" href="{% url 'idea-collection-detail' idea_collection.id %}">
+                    {% trans "Cancel" %}
+                </a>
+                <button
+                    class="bg-red-500 px-3.5 py-1.5 font-semibold leading-7 text-white hover:bg-red-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-400"
+                    type="submit"
+                >
+                    {% trans 'Delete' %}
+                </button>
+            </div>
+        </form>
+    </section>
+{% endblock content %}
