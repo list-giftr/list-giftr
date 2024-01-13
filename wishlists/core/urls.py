@@ -1,4 +1,5 @@
-from django.urls import path
+from django.urls import path, reverse_lazy
+from django.views.generic.base import RedirectView
 
 from core.views import gift_idea, idea_collection
 
@@ -52,5 +53,9 @@ urlpatterns = [
         "ideas/<uuid:pk>/new-idea",
         gift_idea.GiftIdeaCreateView.as_view(),
         name="gift-idea-create",
+    ),
+    path(
+        "",
+        RedirectView.as_view(url=reverse_lazy("idea-collection-list"), permanent=False),
     ),
 ]
