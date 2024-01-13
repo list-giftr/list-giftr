@@ -1,9 +1,12 @@
 from typing import Any
+from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models.query import QuerySet
 from django.forms.models import BaseModelForm
 from django.http import HttpResponse
-from django.views.generic.edit import CreateView
+from django.urls import reverse_lazy
+from django.utils.translation import gettext as _
+from django.views.generic.edit import CreateView, DeleteView
 from django.views.generic.detail import DetailView
 from django.views.generic.list import ListView
 
@@ -20,6 +23,35 @@ class IdeaCollectionCreateView(LoginRequiredMixin, CreateView):
         obj.owner = self.request.user
 
         return super().form_valid(form)
+
+
+class IdeaCollectionDeleteView(LoginRequiredMixin, DeleteView):
+    context_object_name = "idea_collection"
+    model = models.IdeaCollection
+    success_url = reverse_lazy("idea-collection-list")
+
+    def form_valid(self, *args, **kwargs):
+        # Call the parent method first to ensure the deletion succeeds before we
+        # add the success message.
+        response = super().form_valid(*args, **kwargs)
+
+        messages.add_message(
+            self.request,
+            messages.SUCCESS,
+            _("Deleted idea collection '%(collection_name)s'.")
+            % {"collection_name": self.object.name},
+        )
+
+        return response
+
+    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
+        context = super().get_context_data(**kwargs)
+        context["idea_count"] = self.object.ideas.count()
+
+        return context
+
+    def get_queryset(self) -> QuerySet[models.IdeaCollection]:
+        return super().get_queryset().filter(owner=self.request.user)
 
 
 class IdeaCollectionListView(LoginRequiredMixin, ListView):

@@ -7,7 +7,14 @@
         <a class="mb-4 block text-blue-400 underline" href="{% url 'idea-collection-list' %}">
             {% trans 'Back to idea collections' %}
         </a>
-        <h1 class="text-3xl font-semibold">{{ idea_list.name }}</h1>
+        <h1 class="mb-4 text-3xl font-semibold">{{ idea_collection.name }}</h1>
+
+        <a
+            class="mb-4 inline-block bg-red-500 px-2 py-1 font-semibold leading-relaxed text-white shadow-sm hover:bg-red-400 focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-blue-400"
+            href="{% url 'idea-collection-delete' idea_collection.id %}"
+        >
+            Delete
+        </a>
 
         <ul class="list-disc list-inside">
             {% for idea in idea_collection.ideas.all %}

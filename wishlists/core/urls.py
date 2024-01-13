@@ -19,4 +19,9 @@ urlpatterns = [
         views.IdeaCollectionDetailView.as_view(),
         name="idea-collection-detail",
     ),
+    path(
+        "ideas/<uuid:pk>/delete",
+        views.IdeaCollectionDeleteView.as_view(),
+        name="idea-collection-delete",
+    ),
 ]
