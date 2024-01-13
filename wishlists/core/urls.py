@@ -10,6 +10,11 @@ urlpatterns = [
     ),
     path("ideas/", views.IdeaCollectionListView.as_view(), name="idea-collection-list"),
     path(
+        "ideas/new",
+        views.IdeaCollectionCreateView.as_view(),
+        name="idea-collection-create",
+    ),
+    path(
         "ideas/<uuid:pk>/",
         views.IdeaCollectionDetailView.as_view(),
         name="idea-collection-detail",
