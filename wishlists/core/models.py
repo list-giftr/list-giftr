@@ -2,6 +2,7 @@ from uuid import uuid4
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from django.core.exceptions import ValidationError
 from django.db import models
+from django.urls import reverse
 from django.utils.translation import gettext, gettext_lazy as _
 
 from core import managers
@@ -71,6 +72,9 @@ class IdeaCollection(TrackedModel):
 
     def __str__(self) -> str:
         return self.name
+
+    def get_absolute_url(self):
+        return reverse("idea-collection-detail", kwargs={"pk": self.pk})
 
 
 class GiftIdea(TrackedModel):

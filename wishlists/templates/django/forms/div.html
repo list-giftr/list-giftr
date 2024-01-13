@@ -8,7 +8,7 @@
 {% for field in form %}
 {% with field.field.widget.input_type as input_type %}
     {% comment %} <p>{{ input_type }}</p> {% endcomment %}
-{% if input_type == "email" or input_type == "password" %}
+{% if input_type == "email" or input_type == "password" or input_type == "text" %}
     <div class="mb-2 flex flex-col">
         <label class="text-md mb-1" for="{{ field.id_for_label }}">{{ field.label }}</label>
         {% if field.errors %}
