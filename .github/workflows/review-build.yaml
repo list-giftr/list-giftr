@@ -1,9 +1,9 @@
-name: Lint
+name: Review Build
 
 on: pull_request
 
 jobs:
-  lint:
+  build:
     runs-on: ubuntu-latest
 
     steps:
@@ -37,5 +37,11 @@ jobs:
         run: poetry install --no-interaction --no-root
 
       # Lint
+
       - name: Lint
         run: poetry run pre-commit run --all-files --show-diff-on-failure
+
+      # Test
+
+      - name: Run Tests
+        run: poetry run pytest

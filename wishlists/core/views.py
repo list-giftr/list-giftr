@@ -2,7 +2,6 @@ from typing import Any
 
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.db.models.query import QuerySet
 from django.forms.models import BaseModelForm
 from django.http import HttpResponse
 from django.urls import reverse_lazy
@@ -12,6 +11,7 @@ from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from django.views.generic.list import ListView
 
 from core import models
+from core.mixins import OwnedObjectMixin
 
 
 class IdeaCollectionCreateView(LoginRequiredMixin, CreateView):
@@ -26,7 +26,7 @@ class IdeaCollectionCreateView(LoginRequiredMixin, CreateView):
         return super().form_valid(form)
 
 
-class IdeaCollectionDeleteView(LoginRequiredMixin, DeleteView):
+class IdeaCollectionDeleteView(OwnedObjectMixin, DeleteView):
     context_object_name = "idea_collection"
     model = models.IdeaCollection
     success_url = reverse_lazy("idea-collection-list")
@@ -51,42 +51,28 @@ class IdeaCollectionDeleteView(LoginRequiredMixin, DeleteView):
 
         return context
 
-    def get_queryset(self) -> QuerySet[models.IdeaCollection]:
-        return super().get_queryset().filter(owner=self.request.user)
 
-
-class IdeaCollectionListView(LoginRequiredMixin, ListView):
+class IdeaCollectionListView(OwnedObjectMixin, ListView):
     context_object_name = "idea_collections"
     model = models.IdeaCollection
     template_name = "core/ideacollection_list.html"
 
-    def get_queryset(self) -> QuerySet[models.IdeaCollection]:
-        return super().get_queryset().filter(owner=self.request.user)
 
-
-class IdeaCollectionUpdateView(LoginRequiredMixin, UpdateView):
+class IdeaCollectionUpdateView(OwnedObjectMixin, UpdateView):
     context_object_name = "idea_collection"
     model = models.IdeaCollection
     fields = ["name"]
     template_name_suffix = "_update_form"
 
-    def get_queryset(self) -> QuerySet[models.IdeaCollection]:
-        return super().get_queryset().filter(owner=self.request.user)
 
-
-class IdeaCollectionDetailView(LoginRequiredMixin, DetailView):
+class IdeaCollectionDetailView(OwnedObjectMixin, DetailView):
     context_object_name = "idea_collection"
     model = models.IdeaCollection
     template_name = "core/ideacollection_detail.html"
 
-    def get_queryset(self) -> QuerySet[models.IdeaCollection]:
-        return super().get_queryset().filter(owner=self.request.user)
 
-
-class GiftIdeaDetailView(LoginRequiredMixin, DetailView):
+class GiftIdeaDetailView(OwnedObjectMixin, DetailView):
     context_object_name = "gift_idea"
     model = models.GiftIdea
+    object_owner_field = "collection__owner"
     template_name = "core/giftidea_detail.html"
-
-    def get_queryset(self) -> QuerySet[models.GiftIdea]:
-        return super().get_queryset().filter(collection__owner=self.request.user)
