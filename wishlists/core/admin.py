@@ -25,10 +25,11 @@ class GiftIdeaAdmin(admin.ModelAdmin):
         "name",
         "description",
         "link",
+        "mention_count",
         "created_at",
         "updated_at",
     )
-    list_display = ("name", "collection", "created_at", "updated_at")
+    list_display = ("name", "collection", "mention_count", "created_at", "updated_at")
     readonly_fields = ("id", "created_at", "updated_at")
 
     def get_form(
