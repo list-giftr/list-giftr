@@ -2,6 +2,8 @@
 
 {% load i18n %}
 
+{% block title %}{% blocktrans with collection=gift_idea.collection.name name=gift_idea.name %} Gift Idea for {{ collection }} &ndash; {{ name}}{% endblocktrans %}{% endblock title %}
+
 {% block app_content %}
     <a
         class="mb-4 block text-blue-500 underline"

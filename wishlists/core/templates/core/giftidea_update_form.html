@@ -2,7 +2,7 @@
 
 {% load i18n %}
 
-{% block title %}{% trans "Edit Gift Idea" %}{% endblock %}
+{% block title %}{% blocktrans with name=gift_idea.name %}Edit Gift Idea '{{ name }}'{% endblocktrans %}{% endblock %}
 
 {% block app_content %}
     <h1 class="text-4xl mb-4">{% trans "Edit Gift Idea" %}</h1>

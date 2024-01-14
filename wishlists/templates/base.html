@@ -5,7 +5,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>{% block title %}{% translate "Wishlists" %}{% endblock %}</title>
+        <title>{% block full_title %}{% block title %}{% endblock %} | List Giftr{% endblock full_title %}</title>
 
         {% tailwind_css %}
     </head>

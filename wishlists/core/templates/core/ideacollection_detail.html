@@ -2,6 +2,8 @@
 
 {% load i18n %}
 
+{% block title %}{% blocktrans with name=idea_collection.name %}Gifts for {{ name }}{% endblocktrans %}{% endblock title %}
+
 {% block app_content %}
     <a class="mb-4 block text-blue-500 underline" href="{% url 'idea-collection-list' %}">
         {% trans 'Back to idea collections' %}
