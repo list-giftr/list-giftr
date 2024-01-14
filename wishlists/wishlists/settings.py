@@ -12,17 +12,37 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 import os
 from pathlib import Path
+from typing import Optional
+
+from django.core.exceptions import ImproperlyConfigured
 
 
-def get_env_bool(name: str) -> bool:
+def get_env_bool(name: str, default=False) -> bool:
     """
     Get a boolean value from an environment variable.
     """
     raw_value = os.getenv(name)
     if raw_value is None:
-        return False
+        return default
 
-    return raw_value.lower() in ["t", "true", "y", "yes"]
+    return raw_value.lower() in ["t", "true", "y", "yes", "1"]
+
+
+def get_env_int(name: str, default=None) -> Optional[int]:
+    """
+    Get an integer value from an environment variable.
+    """
+    raw_value = os.getenv(name)
+    if raw_value is None:
+        return default
+
+    try:
+        return int(raw_value)
+    except ValueError:
+        raise ImproperlyConfigured(
+            f"Expected environment variable '{name}' to be an integer, not "
+            f"'{raw_value}'."
+        )
 
 
 def get_env_list(name: str, separator: str = ",") -> list[str]:
@@ -217,7 +237,18 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 # Email
 # https://docs.djangoproject.com/en/4.1/topics/email/#email-backends
 
-EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+DEFAULT_FROM_EMAIL = os.getenv("DEFAULT_FROM_EMAIL", "listgiftr@localhost")
+EMAIL_HOST = os.getenv("EMAIL_HOST")
+
+if EMAIL_HOST:
+    EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+
+    EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER")
+    EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
+    EMAIL_PORT = get_env_int("EMAIL_PORT", 587)
+    EMAIL_USE_TLS = get_env_bool("EMAIL_USE_TLS", True)
+else:
+    EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
 # Forms
 
