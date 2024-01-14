@@ -108,7 +108,7 @@ class GiftIdea(TrackedModel):
         null=False,
         default=1,
         verbose_name=_("mention count"),
-        help_text=_("The number of times this gift ideas has been brought up."),
+        help_text=_("The number of times this gift idea has been brought up."),
     )
 
     class Meta:
