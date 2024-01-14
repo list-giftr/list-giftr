@@ -58,6 +58,16 @@ def get_env_list(name: str, separator: str = ",") -> list[str]:
     return raw_value.split(separator)
 
 
+# Enable Sentry if configured
+
+SENTRY_DSN = os.getenv("SENTRY_DSN")
+
+if SENTRY_DSN:
+    import sentry_sdk
+
+    sentry_sdk.init(dsn=SENTRY_DSN, traces_sample_rate=0.1, profiles_sample_rate=0.1)
+
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
