@@ -4,7 +4,7 @@
 
 {% block app_content %}
     <a
-        class="mb-4 block text-blue-400 underline"
+        class="mb-4 block text-blue-500 underline"
         href="{% url 'idea-collection-detail' gift_idea.collection.id %}"
     >
         {% trans "Back to idea collection" %}
@@ -48,7 +48,7 @@
         <p>
             <span class="font-bold">{% trans "Link" %}:</span>
             <a
-                class="text-blue-400 underline"
+                class="text-blue-500 underline"
                 href="{{ gift_idea.link }}"
                 rel="noopener noreferrer"
                 target="_blank"

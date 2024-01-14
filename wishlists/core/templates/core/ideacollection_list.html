@@ -15,7 +15,7 @@
     <ul class="list-disc list-inside">
         {% for idea_collection in idea_collections %}
             <li>
-                <a class="underline text-blue-400" href="{% url "idea-collection-detail" idea_collection.id %}">
+                <a class="underline text-blue-500" href="{% url "idea-collection-detail" idea_collection.id %}">
                     {{ idea_collection.name }}
                 </a>
             </li>
