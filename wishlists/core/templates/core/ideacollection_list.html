@@ -12,12 +12,19 @@
         New Collection
     </a>
 
-    <ul class="list-disc list-inside">
+    <ul>
         {% for idea_collection in idea_collections %}
-            <li>
-                <a class="underline text-blue-500" href="{% url "idea-collection-detail" idea_collection.id %}">
+            <li class="mb-3 px-4 py-2 bg-slate-100 shadow flex items-center gap-x-2">
+                <a class="flex-grow underline text-blue-500" href="{% url "idea-collection-detail" idea_collection.id %}">
                     {{ idea_collection.name }}
                 </a>
+                <p>
+                    {% blocktrans trimmed count ideas=idea_collection.idea_count %}
+                    {{ ideas }} idea
+                    {% plural %}
+                    {{ ideas }} ideas
+                    {% endblocktrans %}
+                </p>
             </li>
         {% endfor %}
     </ul>

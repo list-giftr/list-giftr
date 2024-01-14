@@ -26,3 +26,6 @@ urlpatterns = [
 
 if settings.DEV_LIVE_RELOAD:
     urlpatterns.append(path("__reload__/", include("django_browser_reload.urls")))
+
+if settings.DEV_TOOLS:
+    urlpatterns.append(path("__debug__/", include("debug_toolbar.urls")))

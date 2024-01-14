@@ -2,6 +2,8 @@ from typing import Any
 
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.db.models import Count
+from django.db.models.query import QuerySet
 from django.forms.models import BaseModelForm
 from django.http import HttpResponse
 from django.urls import reverse_lazy
@@ -56,6 +58,9 @@ class IdeaCollectionListView(OwnedObjectMixin, ListView):
     context_object_name = "idea_collections"
     model = models.IdeaCollection
     template_name = "core/ideacollection_list.html"
+
+    def get_queryset(self) -> QuerySet[Any]:
+        return super().get_queryset().annotate(idea_count=Count("idea"))
 
 
 class IdeaCollectionUpdateView(OwnedObjectMixin, UpdateView):

@@ -17,6 +17,7 @@
             "env": {
                 "DEBUG": "true",
                 "DEV_LIVE_RELOAD": "true",
+                "DEV_TOOLS": "true",
                 "DISABLE_PASSWORD_RESTRICTIONS": "true"
             }
         }

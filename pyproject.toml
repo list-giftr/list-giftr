@@ -21,6 +21,7 @@ django-browser-reload = "^1.12.1"
 ruff = "^0.1.13"
 pytest = "^7.4.4"
 pytest-django = "^4.7.0"
+django-debug-toolbar = "^4.2.0"
 
 [tool.pytest.ini_options]
 DJANGO_SETTINGS_MODULE = "wishlists.settings"

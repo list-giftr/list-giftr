@@ -45,6 +45,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Development Specific Settings
 
 DEV_LIVE_RELOAD = get_env_bool("DEV_LIVE_RELOAD")
+DEV_TOOLS = get_env_bool("DEV_TOOLS")
 
 
 # Quick-start development settings - unsuitable for production
@@ -86,16 +87,33 @@ INSTALLED_APPS = [
 if DEV_LIVE_RELOAD:
     INSTALLED_APPS.append("django_browser_reload")
 
-MIDDLEWARE = [
-    "django.middleware.security.SecurityMiddleware",
-    "django.contrib.sessions.middleware.SessionMiddleware",
-    "django.middleware.common.CommonMiddleware",
-    "django.middleware.csrf.CsrfViewMiddleware",
-    "django.contrib.auth.middleware.AuthenticationMiddleware",
-    "django.contrib.messages.middleware.MessageMiddleware",
-    "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    "allauth.account.middleware.AccountMiddleware",
-]
+if DEV_TOOLS:
+    import socket
+
+    INSTALLED_APPS.append("debug_toolbar")
+
+    hostname, _, ips = socket.gethostbyname_ex(socket.gethostname())
+    INTERNAL_IPS = [ip[: ip.rfind(".")] + ".1" for ip in ips] + [
+        "127.0.0.1",
+        "10.0.2.2",
+    ]
+
+MIDDLEWARE = []
+if DEV_TOOLS:
+    MIDDLEWARE.append("debug_toolbar.middleware.DebugToolbarMiddleware")
+
+MIDDLEWARE.extend(
+    [
+        "django.middleware.security.SecurityMiddleware",
+        "django.contrib.sessions.middleware.SessionMiddleware",
+        "django.middleware.common.CommonMiddleware",
+        "django.middleware.csrf.CsrfViewMiddleware",
+        "django.contrib.auth.middleware.AuthenticationMiddleware",
+        "django.contrib.messages.middleware.MessageMiddleware",
+        "django.middleware.clickjacking.XFrameOptionsMiddleware",
+        "allauth.account.middleware.AccountMiddleware",
+    ]
+)
 
 if DEV_LIVE_RELOAD:
     MIDDLEWARE.append("django_browser_reload.middleware.BrowserReloadMiddleware")
