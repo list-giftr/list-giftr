@@ -1,33 +1,31 @@
-{% extends "base.html" %}
+{% extends "core/app.html" %}
 
 {% load i18n %}
 
 {% block title %}{% trans "New Gift Idea" %}{% endblock %}
 
-{% block content %}
-    <section class="mx-auto max-w-lg p-4">
-        <h1 class="text-4xl mb-4">{% trans "New Gift Idea" %}</h1>
-        <p class="mb-8 text-lg leading-relaxed">
-            {% blocktrans trimmed with collection=collection.name %}
-                Add a new idea for {{ collection }}.
-            {% endblocktrans %}
-        </p>
+{% block app_content %}
+    <h1 class="text-4xl mb-4">{% trans "New Gift Idea" %}</h1>
+    <p class="mb-8 text-lg leading-relaxed">
+        {% blocktrans trimmed with collection=collection.name %}
+            Add a new idea for {{ collection }}.
+        {% endblocktrans %}
+    </p>
 
-        <form method="POST" action="{% url 'gift-idea-create' collection.id %}">
-            {% csrf_token %}
-            {{ form }}
+    <form method="POST" action="{% url 'gift-idea-create' collection.id %}">
+        {% csrf_token %}
+        {{ form }}
 
-            <div class="flex justify-between items-center">
-                <a class="underline text-blue-500" href="{% url 'idea-collection-detail' collection.id %}">
-                    {% trans "Cancel" %}
-                </a>
-                <button
-                    class="mt-4 bg-orange-500 px-3.5 py-1.5 font-semibold leading-7 text-white hover:bg-orange-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-400"
-                    type="submit"
-                >
-                    {% trans 'Add Idea' %}
-                </button>
-            </div>
-        </form>
-    </section>
-{% endblock content %}
+        <div class="flex justify-between items-center">
+            <a class="underline text-blue-500" href="{% url 'idea-collection-detail' collection.id %}">
+                {% trans "Cancel" %}
+            </a>
+            <button
+                class="mt-4 bg-orange-500 px-3.5 py-1.5 font-semibold leading-7 text-white hover:bg-orange-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-400"
+                type="submit"
+            >
+                {% trans 'Add Idea' %}
+            </button>
+        </div>
+    </form>
+{% endblock app_content %}

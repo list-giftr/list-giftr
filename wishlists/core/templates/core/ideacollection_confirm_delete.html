@@ -1,11 +1,11 @@
-{% extends "base.html" %}
+{% extends "core/app.html" %}
 
 {% load i18n %}
 
 {% block title %}{% trans "Delete Idea Collection" %}{% endblock title %}
 
-{% block content %}
-    <section class="mx-auto max-w-xl p-4">
+{% block app_content %}
+    <section class="mx-auto max-w-xl">
         <h1 class="text-4xl mb-4">
             {% blocktrans with name=idea_collection.name %}
             Delete Idea Collection &lsquo;{{ name }}&rsquo;?
@@ -45,4 +45,4 @@
             </div>
         </form>
     </section>
-{% endblock content %}
+{% endblock app_content %}
