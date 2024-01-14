@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+
+{% block title %}List Giftr{% endblock %}
+
+{% block content %}
+    <section class="px-4 py-16 bg-slate-100">
+        <div class="mx-auto max-w-lg text-center">
+            <h1 class="mb-4 text-6xl text-orange-500 font-semibold">List Giftr</h1>
+            <h2 class="text-2xl text-slate-800">
+                {% blocktrans trimmed %}
+                Be the best gift giver you can be.
+                {% endblocktrans %}
+            </h2>
+        </div>
+    </section>
+
+    <section class="mx-auto px-4 py-16 max-w-lg">
+        <h2 class="mb-8 text-2xl md:text-3xl">{% trans "The List Giftr process" %}:</h2>
+        <ul class="mb-8 ml-6 text-xl list-decimal list-outside marker:text-orange-500 md:text-2xl">
+            <li class="mb-2">{% trans 'Create a list for them' %}</li>
+            <li class="mb-2">{% trans 'Add items as they mention them' %}</li>
+            <li class="mb-2">{% trans 'Track how many times they talk about it' %}</li>
+            <li class="mb-2">{% trans 'Give the perfect gift' %}
+        </ul>
+
+        <div class="flex justify-center align-center gap-x-6">
+            <a
+                class="bg-orange-500 px-6 py-2 text-xl font-semibold leading-relaxed text-white transition-colors hover:bg-orange-400 focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-blue-400"
+                href="{% url 'account_signup' %}"
+            >
+                {% trans "Sign Up" %}
+            </a>
+            <a
+                class="px-6 py-2 text-xl font-semibold leading-relaxed text-orange-500 border-2 border-orange-500 transition-colors hover:bg-orange-400 hover:text-white focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-blue-400"
+                href="{% url 'account_login' %}"
+            >
+                {% trans "Log In" %}
+            </a>
+        </div>
+    </section>
+
+    <section class="mx-auto px-4 py-16 bg-slate-100">
+        <div class="mx-auto max-w-lg text-lg text-slate-800 leading-relaxed">
+            <p class="mb-4">
+                {% blocktrans trimmed %}
+                List Giftr was created for those of us who struggle to think of
+                gift ideas right before a birthday or holiday. There are so many
+                times throughout the year when people mention little wants they
+                have. By tracking these mentions over time, you can come up with
+                the perfect gift.
+                {% endblocktrans %}
+            </p>
+
+            <p>
+                {% blocktrans trimmed %}
+                This works for family, friends, coworkers, or even yourself. All
+                it takes is a commitment to listening to those innocuous "I wish
+                I had..." comments.
+                {% endblocktrans %}
+            </p>
+        </div>
+    </section>
+
+{% endblock content %}

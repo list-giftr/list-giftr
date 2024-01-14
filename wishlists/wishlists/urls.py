@@ -16,17 +16,12 @@ Including another URLconf
 """
 from django.conf import settings
 from django.contrib import admin
-from django.urls import include, path, reverse_lazy
-from django.views.generic.base import RedirectView
+from django.urls import include, path
 
 urlpatterns = [
     path("accounts/", include("allauth.urls")),
     path("admin/", admin.site.urls),
-    path("app/", include("core.urls")),
-    path(
-        "",
-        RedirectView.as_view(url=reverse_lazy("idea-collection-list"), permanent=False),
-    ),
+    path("", include("core.urls")),
 ]
 
 if settings.DEV_LIVE_RELOAD:
