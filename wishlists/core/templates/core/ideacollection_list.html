@@ -5,6 +5,12 @@
 {% block app_content %}
     <h1 class="mb-4 text-3xl font-semibold">{% trans "Ideas" %}</h1>
 
+    <p class="mb-4 text-lg">
+        {% blocktrans trimmed %}
+        Create collections of ideas for each person you want to give gifts to.
+        {% endblocktrans %}
+    </p>
+
     <a
         class="mb-8 inline-block bg-orange-500 px-2 py-1 font-semibold leading-relaxed text-white shadow-sm hover:bg-orange-400 focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-blue-400"
         href="{% url 'idea-collection-create' %}"
