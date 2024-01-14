@@ -34,7 +34,7 @@
     </div>
 
     {% for idea in idea_collection.ideas.all %}
-        <div class="mb-1 px-4 py-2 bg-slate-100 shadow flex items-center gap-x-2">
+        <div class="mb-3 px-4 py-2 bg-slate-100 shadow flex items-center gap-x-2">
             <p class="flex-grow">
                 <a class="line-clamp-1 underline text-blue-500" href="{% url "gift-idea-detail" idea.id %}">
                     {{ idea.name }}
