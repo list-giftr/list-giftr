@@ -1,7 +1,7 @@
 from django.urls import path
 from django.views.generic.base import TemplateView
 
-from core.views import gift_idea, idea_collection
+from core.views import gift_idea, idea_collection, robots
 
 urlpatterns = [
     path("", TemplateView.as_view(template_name="core/home.html"), name="index"),
@@ -55,4 +55,5 @@ urlpatterns = [
         gift_idea.GiftIdeaCreateView.as_view(),
         name="gift-idea-create",
     ),
+    path("robots.txt", robots.robots_txt, name="robots.txt"),
 ]

@@ -1,0 +1,6 @@
+# Allow pages that don't require authentication, and disallow everything else.
+User-agent: *
+Allow: {% url 'index' %}$
+Allow: {% url 'account_login' %}$
+Allow: {% url 'account_signup' %}$
+Disallow: /
