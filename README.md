@@ -37,6 +37,7 @@ The following environment variables are optional in a production deployment:
 `EMAIL_HOST_PASSWORD` | [`EMAIL_HOST_PASSWORD`][django-setting-email-host-password] | `None` | Password to authenticate SMTP emails
 `EMAIL_PORT` | [`EMAIL_PORT`][django-setting-email-port] | `587` | Port to send SMTP emails on
 `EMAIL_USE_TLS` | [`EMAIL_USE_TLS`][django-setting-email-use-tls] | `True` | Whether to use TLS when talking to the SMTP server
+`SENTRY_DSN` | | `None` | Enable monitoring with Sentry and send events to the provided DSN
 
 The following environment variables can be used as flags to enable development
 specific features. The following values (case insensitive) are accepted as
