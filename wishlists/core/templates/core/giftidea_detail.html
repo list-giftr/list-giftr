@@ -17,20 +17,23 @@
     <div class="mb-4 flex gap-2">
         <form method="POST" action="{% url 'gift-idea-mention' gift_idea.id %}">{% csrf_token %}
             <button
-                class="bg-green-600 px-2 py-1 font-semibold leading-relaxed text-white shadow-sm hover:bg-green-500 focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-blue-400"
+                class="bg-green-600 px-2 py-1 font-semibold leading-relaxed text-white shadow-sm transition-colors hover:bg-green-500 focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-blue-400 disabled:bg-green-200"
                 type="submit"
+                hx-post="{% url 'gift-idea-mention' gift_idea.id %}"
+                hx-target="#mention-count"
+                hx-disabled-elt="this"
             >
                 {% trans "Mentioned" %}
             </button>
         </form>
         <a
-            class="bg-orange-500 px-2 py-1 font-semibold leading-relaxed text-white shadow-sm hover:bg-orange-400 focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-blue-400"
+            class="bg-orange-500 px-2 py-1 font-semibold leading-relaxed text-white shadow-sm transition-colors hover:bg-orange-400 focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-blue-400"
             href="{% url 'gift-idea-update' gift_idea.id %}"
         >
             {% trans "Edit" %}
         </a>
         <a
-            class="bg-red-500 px-2 py-1 font-semibold leading-relaxed text-white shadow-sm hover:bg-red-400 focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-blue-400"
+            class="bg-red-500 px-2 py-1 font-semibold leading-relaxed text-white shadow-sm transition-colors hover:bg-red-400 focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-blue-400"
             href="{% url 'gift-idea-delete' gift_idea.id %}"
         >
             {% trans "Delete" %}
@@ -39,24 +42,21 @@
 
     {% if gift_idea.description %}
         <p class="mb-2 text-lg leading-relaxed whitespace-pre-line">{{ gift_idea.description }}</p>
+
+        {% if gift_idea.link %}
+            <p class="mb-2">
+                <span class="font-bold">{% trans "Link" %}:</span>
+                <a
+                    class="text-blue-500 underline"
+                    href="{{ gift_idea.link }}"
+                    rel="noopener noreferrer"
+                    target="_blank"
+                >
+                    {{ gift_idea.link | truncatechars:50 }}
+                </a>
+            </p>
+        {% endif %}
     {% endif %}
 
-    <p>
-        <span class="font-bold">{% trans "Mention Count" %}:</span>
-        <span class="px-1 py-0.5 bg-gray-200 rounded-md">{{ gift_idea.mention_count }}</span>
-    </p>
-
-    {% if gift_idea.link %}
-        <p>
-            <span class="font-bold">{% trans "Link" %}:</span>
-            <a
-                class="text-blue-500 underline"
-                href="{{ gift_idea.link }}"
-                rel="noopener noreferrer"
-                target="_blank"
-            >
-                {{ gift_idea.link | truncatechars:50 }}
-            </a>
-        </p>
-    {% endif %}
+    <p id="mention-count">{% include "core/snippets/idea-mention-count.html" with idea=gift_idea %}</p>
 {% endblock app_content %}

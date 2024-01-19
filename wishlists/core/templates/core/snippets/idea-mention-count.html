@@ -1,0 +1,7 @@
+{% load i18n %}
+
+{% blocktrans trimmed count times=idea.mention_count %}
+Mentioned {{ times }} time
+{% plural %}
+Mentioned {{ times }} times
+{% endblocktrans %}

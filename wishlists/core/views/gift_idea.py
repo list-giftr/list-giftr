@@ -5,7 +5,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpRequest
-from django.shortcuts import get_object_or_404, redirect
+from django.shortcuts import get_object_or_404, redirect, render
 from django.utils.translation import gettext as _
 from django.views.decorators.http import require_POST
 from django.views.generic.detail import DetailView
@@ -87,12 +87,22 @@ def gift_idea_mentioned(request: HttpRequest, pk: uuid.UUID):
     GET parameter is present, the redirect is to the detail page of the
     idea's collection. Otherwise it is to the detail page of the idea
     itself.
+
+    HTMX-driven requests receive a response containing the updated
+    mention count wording.
     """
 
     gift_idea = get_object_or_404(
         models.GiftIdea, pk=pk, collection__owner=request.user
     )
     gift_idea.increment_mention_count()
+
+    if request.headers.get("Hx-Request") == "true":
+        gift_idea.refresh_from_db()
+
+        return render(
+            request, "core/snippets/idea-mention-count.html", {"idea": gift_idea}
+        )
 
     return_to_list_page = "from_list_page" in request.GET
     if return_to_list_page:
