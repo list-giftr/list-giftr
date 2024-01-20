@@ -32,6 +32,7 @@ testpaths = ["tests"]
 
 [tool.pytest_env]
 SECRET_KEY = "test"
+DEV_EPHEMERAL_DB = "true"
 DEV_STATIC_FILES_NOT_HASHED = "true"
 
 [tool.ruff.lint]
