@@ -46,6 +46,7 @@ truthy: `t`, `true`, `y`, `yes`, `1`
 **Name** | **Description**
 ---|---
 `DEBUG` | Enables debug mode which provides stack traces in the browser when errors occur. This can expose sensitive information. This also provides a default value for `SECRET_KEY`.
+`DEV_STATIC_FILES_NOT_HASHED` | Use the default static files storage. Typically used for integration testing so static files can be found.
 `DEV_LIVE_RELOAD` | Enables live reloading of the browser when template changes are made.
 `DEV_TOOLS` | Enables `django-debug-toolbar`
 `DISABLE_PASSWORD_RESTRICTIONS` | Disables the requirement that passwords not be too common.

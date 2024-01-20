@@ -242,14 +242,15 @@ STATICFILES_DIRS = [BASE_DIR / "static"]
 # Storages
 # https://docs.djangoproject.com/en/5.0/ref/settings/#storages
 
-STORAGES = {
-    "default": {
-        "BACKEND": "django.core.files.storage.FileSystemStorage",
-    },
-    "staticfiles": {
-        "BACKEND": "django.contrib.staticfiles.storage.ManifestStaticFilesStorage",
-    },
-}
+if not get_env_bool("DEV_STATIC_FILES_NOT_HASHED"):
+    STORAGES = {
+        "default": {
+            "BACKEND": "django.core.files.storage.FileSystemStorage",
+        },
+        "staticfiles": {
+            "BACKEND": "django.contrib.staticfiles.storage.ManifestStaticFilesStorage",
+        },
+    }
 
 
 # Default primary key field type
