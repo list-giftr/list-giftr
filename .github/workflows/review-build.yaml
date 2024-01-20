@@ -1,6 +1,10 @@
 name: Review Build
 
-on: pull_request
+on:
+  pull_request: {}
+  push:
+    branches:
+      - main
 
 jobs:
   build:
@@ -43,5 +47,8 @@ jobs:
 
       # Test
 
-      - name: Run Tests
-        run: poetry run pytest
+      - name: Run Unit Tests
+        run: poetry run pytest tests/unit
+
+      - name: Run Integration Tests
+        run: poetry run pytest tests/integration
