@@ -10,6 +10,7 @@
 		"ghcr.io/devcontainers-contrib/features/poetry": {},
 		"ghcr.io/devcontainers/features/node": {},
 		"ghcr.io/devcontainers/features/github-cli": {},
+		"ghcr.io/devcontainers/features/docker-outside-of-docker": {}
 	},
 	"customizations": {
 		"vscode": {
