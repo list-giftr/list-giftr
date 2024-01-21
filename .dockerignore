@@ -1,0 +1,10 @@
+__pycache__
+.devcontainer
+.github
+.pytest_cache
+.ruff_cache
+.venv
+.vscode
+tests
+.pre-commit-config.yaml
+*.pyc
