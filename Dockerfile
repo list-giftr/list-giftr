@@ -1,7 +1,9 @@
-FROM python:3.11
+ARG PROJECT_HOME=/opt/list-giftr
 
-ARG PROJECT_HOME=/opt/unnamed-web-project
-WORKDIR ${PROJECT_HOME}
+FROM python:3.11 as base
+
+ARG PROJECT_HOME
+WORKDIR "${PROJECT_HOME}"
 
 ENV DEBIAN_FRONTEND=noninteractive \
     PIP_NO_CACHE_DIR=off \
@@ -9,14 +11,29 @@ ENV DEBIAN_FRONTEND=noninteractive \
     POETRY_VERSION=1.7.1 \
     PYTHONUNBUFFERED=1
 
+# Install Poetry dependencies
+RUN pip install "poetry==${POETRY_VERSION}" \
+    && poetry config virtualenvs.create false
+
+FROM node:18-bullseye AS staticfile_builder
+
+ARG PROJECT_HOME
+
 RUN apt-get update \
     && curl -fsSL https://deb.nodesource.com/setup_18.x | bash - \
     && apt-get install -y nodejs \
     && rm -rf /var/lib/apt/lists/*
 
-# Install Python dependencies
-RUN pip install "poetry==${POETRY_VERSION}" \
-    && poetry config virtualenvs.create false
+WORKDIR "${PROJECT_HOME}/theme/src"
+COPY ./wishlists/theme/static_src ./
+
+RUN npm run build:clean && npm run build:tailwind
+
+
+FROM base
+
+ARG PROJECT_HOME
+
 COPY poetry.lock pyproject.toml ./
 RUN poetry install --no-interaction --without dev
 
@@ -24,8 +41,6 @@ RUN poetry install --no-interaction --without dev
 COPY . .
 
 # Build CSS files
-RUN cd wishlists \
-    && python ./manage.py tailwind install \
-    && python ./manage.py tailwind build
+COPY --from=staticfile_builder "${PROJECT_HOME}/theme/static" "${PROJECT_HOME}/wishlists/theme/static"
 
 ENTRYPOINT ["./entrypoint.sh"]
